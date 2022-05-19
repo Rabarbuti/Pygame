@@ -25,10 +25,21 @@ P1=[]
 P2=[]
 P3=[]
 P4=[]
-manilhas=[]
 
 carta_tornada=random.choice(lista_geral)
 lista_geral.remove(carta_tornada)
+
+if carta_tornada in lista_ouros:
+    indice=lista_ouros.index(carta_tornada)+1
+if carta_tornada in lista_espadas:
+    indice=lista_espadas.index(carta_tornada)+1
+if carta_tornada in lista_copas:
+    indice=lista_copas.index(carta_tornada)+1
+if carta_tornada in lista_paus:
+    indice=lista_paus.index(carta_tornada) +1
+if indice==10:
+    indice=0
+manilhas=[lista_ouros[indice],lista_espadas[indice],lista_copas[indice],lista_paus[indice]]
 
 while len(lista_geral)>27:
     if len(P1)<3:
@@ -48,7 +59,4 @@ while len(lista_geral)>27:
         P4.append(carta_sorteada)
         lista_geral.remove(carta_sorteada)
 
-print(P1)
-print(P2)
-print(P3)
-print(P4)
+rodada=1
