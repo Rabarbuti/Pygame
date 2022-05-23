@@ -13,6 +13,15 @@ lista_copas=['C4','C5','C6','C7','CQ','CJ','CK','CA','C2','C3']
 
 lista_paus=['P4','P5','P6','P7','PQ','PJ','PK','PA','P2','P3']
 
+
+pontos_d1=0
+pontos_d2=0
+turno=1
+pontos_rodada_d1=0
+pontos_rodada_d2=0
+
+while pontos_rodada_d1 or pontos_rodada_d2<2:
+    
 #lista_geral
 lista_geral=[]
 lista_geral.extend(lista_ouros)
@@ -58,5 +67,11 @@ while len(lista_geral)>27:
         carta_sorteada=random.choice(lista_geral)
         P4.append(carta_sorteada)
         lista_geral.remove(carta_sorteada)
+pontos_d1=0
+pontos_d2=0
+turno=1
+pontos_rodada_d1=0
+pontos_rodada_d2=0
 
-rodada=1
+while pontos_rodada_d1 or pontos_rodada_d2<2:
+    
