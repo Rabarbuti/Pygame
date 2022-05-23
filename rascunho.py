@@ -23,7 +23,7 @@ pontos_rodada_d2=0
 while pontos_rodada_d1 or pontos_rodada_d2<2:
     
 #lista_geral
-lista_geral=[]
+lista_geral = []
 lista_geral.extend(lista_ouros)
 lista_geral.extend(lista_espadas)
 lista_geral.extend(lista_copas)
@@ -74,4 +74,3 @@ pontos_rodada_d1=0
 pontos_rodada_d2=0
 
 while pontos_rodada_d1 or pontos_rodada_d2<2:
-    
