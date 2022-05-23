@@ -1,4 +1,5 @@
 import random
+import pygame
 
 #ouros
 
@@ -13,6 +14,7 @@ lista_copas=['C4','C5','C6','C7','CQ','CJ','CK','CA','C2','C3']
 
 lista_paus=['P4','P5','P6','P7','PQ','PJ','PK','PA','P2','P3']
 
+dic_valor = {'A':'ace','Q':"queen",'K':'king','J':'jack'}
 
 pontos_d1=0
 pontos_d2=0
@@ -20,10 +22,9 @@ turno=1
 pontos_rodada_d1=0
 pontos_rodada_d2=0
 
-while pontos_rodada_d1 or pontos_rodada_d2<2:
     
 #lista_geral
-lista_geral=[]
+lista_geral = []
 lista_geral.extend(lista_ouros)
 lista_geral.extend(lista_espadas)
 lista_geral.extend(lista_copas)
@@ -73,5 +74,41 @@ turno=1
 pontos_rodada_d1=0
 pontos_rodada_d2=0
 
-while pontos_rodada_d1 or pontos_rodada_d2<2:
-    
+dicionario_imagens_ouro={}
+for carta in lista_ouros:
+    if carta[1] in dic_valor:
+        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_diamonds.png')  
+    else:
+        imagem=(f'Pygame\cartas\{carta[1]}_of_diamonds.png')
+    dicionario_imagens_ouro[carta]=pygame.image.load(imagem)
+
+dicionario_imagens_espadas = {}
+for carta in lista_espadas:
+    if carta[1] in dic_valor:
+        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_spades.png')  
+    else:
+        imagem=(f'Pygame\cartas\{carta[1]}_of_spades.png')
+    dicionario_imagens_espadas[carta]=pygame.image.load(imagem)
+
+dicionario_imagens_copas = {}
+for carta in lista_copas:
+    if carta[1] in dic_valor:
+        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_hearts.png')  
+    else:
+        imagem=(f'Pygame\cartas\{carta[1]}_of_hearts.png')
+    dicionario_imagens_copas[carta]=pygame.image.load(imagem)
+
+dicionario_imagens_paus = {}
+for carta in lista_paus:
+    if carta[1] in dic_valor:
+        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_clubs.png')  
+    else:
+        imagem=(f'Pygame\cartas\{carta[1]}_of_clubs.png')
+    dicionario_imagens_paus[carta]=pygame.image.load(imagem)
+# dicionario_imagens_ouros = {'O4': 'cartas/4_of_diamonds.png', 'O5':'cartas/5_of_diamonds.png' ,'O6': 'cartas/6_of_diamonds.png', 'O7':'cartas/7_of_diamonds.png' , 'OQ':'cartas/queen_of_diamonds2.png' ,'OJ':'cartas/jack_of_diamonds2.png' , 'OK':'cartas/king_of_diamonds2.png' ,'OA': 'cartas/ace_of_diamonds.png', 'O2':'cartas/2_of_diamonds.png' , 'O3':'cartas/3_of_diamonds.png' }
+print(dicionario_imagens_ouro)
+print(dicionario_imagens_espadas)
+print(dicionario_imagens_copas)
+print(dicionario_imagens_paus)
+# pygame.image.load("cartas/4_of_diamonds.png")
+
