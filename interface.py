@@ -68,4 +68,3 @@ for carta in lista_paus:
     else:
         imagem=(f'Pygame\cartas\{carta[1]}_of_clubs.png')
     dicionario_imagens_paus[carta]=pygame.image.load(imagem)
-

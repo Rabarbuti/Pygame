@@ -74,7 +74,7 @@ def distribui_mao(lista):
         P4.append(carta_sorteada)
         lista_geral.remove(carta_sorteada)
     return [P1,P2,P3,P4]
-def ganhador(lista_jogadores,lista_rodada,lista_geral,manilhas):
+'''def ganhador(lista_jogadores,lista_rodada,lista_geral,manilhas):
     i=0
     lista_manilhas_usadas=[]
     P1=lista_jogadores[0]
@@ -86,7 +86,7 @@ def ganhador(lista_jogadores,lista_rodada,lista_geral,manilhas):
             if check==True:
                 if lista_rodada[i] in manilhas:
                     lista_manilhas_usadas.append(lista_rodada[i])
-                    i+=1
+                    i+=1'''
 dicionario_imagens_ouro={}
 for carta in lista_ouros:
     if carta[1] in dic_valor:
@@ -127,9 +127,9 @@ dicionario_imagens_total = (dicionario_imagens_2|dicionario_imagens_paus)
 print(dicionario_imagens_espadas)
 print(dicionario_imagens_copas)
 print(dicionario_imagens_paus)'''
-#print(dicionario_imagens_total)
+print(dicionario_imagens_total)
         
-cartas_na_mesa = [['EA', 'O4','OQ'],['O5','O6','O7'],['P6', 'PJ','OJ'],['E4', 'E5','E6']]
+cartas_na_mesa = [['EA', 'O4','OK'],['O5','O6','O7'],['P6', 'PJ','OJ'],['E4', 'E5','E6']]
 
 
 pygame.init()
@@ -153,6 +153,9 @@ while game:
 
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
+    tela_fundo = pygame.image.load('Pygame/table_top.png')
+    tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
+    window.blit(tela_fundo,(i,0))
     if i < 1:
         for i in range(len(cartas_na_mesa[0])):
             for t in range(len(cartas_na_mesa)):
