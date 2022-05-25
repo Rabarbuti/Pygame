@@ -1,10 +1,17 @@
 import pygame
+import random
+import os
+import rascunho
 
 pygame.init()
 
-window = pygame.display.set_mode((800, 600))
-pygame.display.set_caption('Hello Arthur!')
-icon = pygame.image.load('avatar.png')
+MAIN_IMAGE_PATH = os.dirname(_file_)
+IMAGES_FOLDER = os.path.join(MAIN_IMAGE_PATH, "imagem")
+CARDS_FOLDER = os.path.join(MAIN_IMAGE_PATH, "cartas")
+
+window = pygame.display.set_mode((1800, 900))
+pygame.display.set_caption('Truco!')
+icon = pygame.image.load(os.path.join(MAIN_IMAGE_PATH, "back_cards.jpg"))
 #Players
 player1Img = pygame.image.load('Arthur.jpg')
 player1X = 370
