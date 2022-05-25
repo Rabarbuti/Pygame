@@ -11,7 +11,7 @@ CARDS_FOLDER = os.path.join(MAIN_IMAGE_PATH, "cartas")
 
 window = pygame.display.set_mode((1800, 900))
 pygame.display.set_caption('Truco!')
-icon = pygame.image.load(os.path.join(MAIN_IMAGE_PATH, "back_cards.jpg"))
+icon = pygame.image.load(os.path.join(MAIN_IMAGE_PATH, "back_card.png"))
 #Players
 player1Img = pygame.image.load('Arthur.jpg')
 player1X = 370
