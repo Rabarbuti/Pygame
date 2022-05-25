@@ -1,6 +1,12 @@
 import random
 import pygame
+list1 = [1, 2, 3]
+list2 = [1]
 
+intersection_set = set.intersection(set(list1), set(list2))
+intersection_list = list(intersection_set)
+
+print(intersection_list)
 #ouros
 lista_ouros=['O4','O5','O6','O7','OQ','OJ','OK','OA','O2','O3']
 #espadas
@@ -43,7 +49,6 @@ def achar_manilhas(carta_tornada,lista):
         indice=0
     manilhas=[lista_ouros[indice],lista_espadas[indice],lista_copas[indice],lista_paus[indice]]
     return manilhas
-
 def distribui_mao(lista):
     lista_geral=lista[0]
     carta_tornada=[1]
@@ -69,6 +74,19 @@ def distribui_mao(lista):
         P4.append(carta_sorteada)
         lista_geral.remove(carta_sorteada)
     return [P1,P2,P3,P4]
+def ganhador(lista_jogadores,lista_rodada,lista_geral,manilhas):
+    i=0
+    lista_manilhas_usadas=[]
+    P1=lista_jogadores[0]
+    P2=lista_jogadores[1]
+    P3=lista_jogadores[2]
+    P4=lista_jogadores[3]
+        while i<=4:
+            check=any(item   from lista_geral in manilhas)
+            if check==True:
+                if lista_rodada[i] in manilhas:
+                    lista_manilhas_usadas.append(lista_rodada[i])
+                    i+=1
 dicionario_imagens_ouro={}
 for carta in lista_ouros:
     if carta[1] in dic_valor:
