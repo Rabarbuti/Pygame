@@ -32,3 +32,32 @@ while game:
 
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
+
+dicionario_imagens_ouro={}
+for carta in lista_ouros:
+    if carta[1] in dic_valor:
+        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_diamonds.png')  
+    else:
+        imagem=(f'Pygame\cartas\{carta[1]}_of_diamonds.png')
+    dicionario_imagens_ouro[carta]=pygame.image.load(imagem)
+dicionario_imagens_espadas = {}
+for carta in lista_espadas:
+    if carta[1] in dic_valor:
+        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_spades.png')  
+    else:
+        imagem=(f'Pygame\cartas\{carta[1]}_of_spades.png')
+    dicionario_imagens_espadas[carta]=pygame.image.load(imagem)
+dicionario_imagens_copas = {}
+for carta in lista_copas:
+    if carta[1] in dic_valor:
+        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_hearts.png')  
+    else:
+        imagem=(f'Pygame\cartas\{carta[1]}_of_hearts.png')
+    dicionario_imagens_copas[carta]=pygame.image.load(imagem)
+dicionario_imagens_paus = {}
+for carta in lista_paus:
+    if carta[1] in dic_valor:
+        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_clubs.png')  
+    else:
+        imagem=(f'Pygame\cartas\{carta[1]}_of_clubs.png')
+    dicionario_imagens_paus[carta]=pygame.image.load(imagem)
