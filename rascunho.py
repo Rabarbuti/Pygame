@@ -128,15 +128,17 @@ print(dicionario_imagens_espadas)
 print(dicionario_imagens_copas)
 print(dicionario_imagens_paus)'''
 print(dicionario_imagens_total)
+
         
-cartas_na_mesa = [['EA', 'O4','OK'],['O5','O6','O7'],['P6', 'PJ','OJ'],['E4', 'E5','E6']]
+cartas_na_mesa = [['EA', 'O4','OK'],['O5','O6','O7'],['P6', 'PJ','OJ'],['E7', 'PA','C2']]
+manilhas_sorteadas = ['O5','E5','C5','P5']
 
 
 pygame.init()
 
 
-WIDTH = 500
-HEIGHT = 400
+WIDTH = 1200
+HEIGHT = 800
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 
 
@@ -160,8 +162,11 @@ while game:
         for i in range(len(cartas_na_mesa[0])):
             for t in range(len(cartas_na_mesa)):
                 imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_na_mesa[t][i]])
-                image = pygame.transform.scale(imagem_carta, (125/2, 166/2))
-                window.blit(image, [10+100*t, 10+50*i])
+                maos = pygame.transform.scale(imagem_carta, (100, 130))
+                imagem_manilhas = pygame.image.load(dicionario_imagens_total[manilhas_sorteadas[t]])
+                manilhas = pygame.transform.scale(imagem_manilhas, (100, 130))
+                window.blit(maos, [10+150*t, 10+60*i])
+                window.blit(manilhas, [10+50*t, 10+600])
                 pygame.display.update()
         i += 1
 
