@@ -1,5 +1,3 @@
-from importlib_metadata import files
-
 
 def lists_formation(complete_list):
     row_A = []
@@ -56,10 +54,7 @@ def colors():
             }
 
 def cards():
-    cards ={'10_of_clubs' : '10_of_clubs.png',
-    '10_of_diamonds' : '10_of_diamonds.png',      
-    '10_of_hearts' : '10_of_hearts.png',
-    '10_of_spades' : '10_of_spades.png',
+    cards ={
     '2_of_clubs' : '2_of_clubs.png',
     '2_of_diamonds' : '2_of_diamonds.png',        
     '2_of_hearts' : '2_of_hearts.png',
@@ -84,14 +79,6 @@ def cards():
     '7_of_diamonds' : '7_of_diamonds.png',        
     '7_of_hearts' : '7_of_hearts.png',
     '7_of_spades' : '7_of_spades.png',
-    '8_of_clubs' : '8_of_clubs.png',
-    '8_of_diamonds' : '8_of_diamonds.png',        
-    '8_of_hearts' : '8_of_hearts.png',
-    '8_of_spades' : '8_of_spades.png',
-    '9_of_clubs' : '9_of_clubs.png',
-    '9_of_diamonds' : '9_of_diamonds.png',        
-    '9_of_hearts' : '9_of_hearts.png',
-    '9_of_spades' : '9_of_spades.png',
     'ace_of_clubs' : 'ace_of_clubs.png',
     'ace_of_diamonds' : 'ace_of_diamonds.png',    
     'ace_of_hearts' : 'ace_of_hearts.png',        
