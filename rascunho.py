@@ -55,9 +55,11 @@ print(dicionario_imagens_copas)
 print(dicionario_imagens_paus)'''
 print(dicionario_imagens_total)
 
+
         
-cartas_na_mesa = [['EA', 'O4','OK'],['O5','O6','O7'],['P6', 'PJ','OJ'],['E7', 'PA','C2']]
-manilhas_sorteadas = ['O5','E5','C5','P5']
+cartas_na_mesa = funcoes.distribui_mao(funcoes.tornar_carta(lista_geral))
+print(cartas_na_mesa)
+manilha_sorteada = funcoes.achar_manilhas(funcoes.tornar_carta(lista_geral)[1],lista_geral)
 
 
 pygame.init()
@@ -89,7 +91,7 @@ while game:
             for t in range(len(cartas_na_mesa)):
                 imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_na_mesa[t][i]])
                 maos = pygame.transform.scale(imagem_carta, (100, 130))
-                imagem_manilhas = pygame.image.load(dicionario_imagens_total[manilhas_sorteadas[t]])
+                imagem_manilhas = pygame.image.load(dicionario_imagens_total[manilha_sorteada[t]])
                 manilhas = pygame.transform.scale(imagem_manilhas, (100, 130))
                 window.blit(maos, [10+150*t, 10+60*i])
                 window.blit(manilhas, [10+50*t, 10+600])

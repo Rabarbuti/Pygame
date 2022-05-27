@@ -45,30 +45,30 @@ def achar_manilhas(carta_tornada,lista):
     return manilhas
 def distribui_mao(lista):
     lista_geral=lista[0]
-    carta_tornada=[1]
+    carta_tornada=lista[1]
     P1=[]
     P2=[]
     P3=[]
     P4=[]
     lista_geral.remove(carta_tornada)
-    if len(P1)<3:
+    while len(P1)<3:
         carta_sorteada=random.choice(lista_geral)
         P1.append(carta_sorteada)
         lista_geral.remove(carta_sorteada)
-    if len(P2)<3:
+    while len(P2)<3:
         carta_sorteada=random.choice(lista_geral)
         P2.append(carta_sorteada)
         lista_geral.remove(carta_sorteada)
-    if len(P3)<3:
+    while len(P3)<3:
         carta_sorteada=random.choice(lista_geral)
         P3.append(carta_sorteada)
         lista_geral.remove(carta_sorteada)
-    if len(P4)<3:
+    while len(P4)<3:
         carta_sorteada=random.choice(lista_geral)
         P4.append(carta_sorteada)
         lista_geral.remove(carta_sorteada)
     return [P1,P2,P3,P4]
-def ganhador(lista_jogadores,lista_rodada,manilhas):
+'''def ganhador(lista_jogadores,lista_rodada,manilhas):
     i=0
     j=0
     lista_manilhas_usadas=[]
@@ -104,7 +104,7 @@ def ganhador(lista_jogadores,lista_rodada,manilhas):
             return 'P3'
         if manilha_vencedora in P4:
             return 'P4'
-    if len(a)==0:
+    if len(a)==0:'''
         
 dicionario_imagens_ouro={}
 for carta in lista_ouros:
@@ -137,11 +137,3 @@ for carta in lista_paus:
     else:
         imagem=(f'Pygame\cartas\{carta[1]}_of_clubs.png')
     dicionario_imagens_paus[carta]=pygame.image.load(imagem)
-
-
-        
-       
-        
-
-
-        
