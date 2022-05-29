@@ -1,6 +1,7 @@
 import random
-import pygame
+import pygame, sys
 import funcoes
+from pygame.locals import *
 lista_ouros=['O4','O5','O6','O7','OQ','OJ','OK','OA','O2','O3']
 #espadas
 lista_espadas=['E4','E5','E6','E7','EQ','EJ','EK','EA','E2','E3']
@@ -48,60 +49,112 @@ for carta in lista_paus:
 dicionario_imagens_1 = (dicionario_imagens_ouro|dicionario_imagens_espadas)
 dicionario_imagens_2 = (dicionario_imagens_1|dicionario_imagens_copas)
 dicionario_imagens_total = (dicionario_imagens_2|dicionario_imagens_paus)
-
-'''print(dicionario_imagens_ouro)
-print(dicionario_imagens_espadas)
-print(dicionario_imagens_copas)
-print(dicionario_imagens_paus)'''
-print(dicionario_imagens_total)
-
-
         
 cartas_na_mesa = funcoes.distribui_mao(funcoes.tornar_carta(lista_geral))
-print(cartas_na_mesa)
 manilha_sorteada = funcoes.achar_manilhas(funcoes.tornar_carta(lista_geral)[1],lista_geral)
 
 
+
+
+mainClock = pygame.time.Clock()
 pygame.init()
 
+WIDTH = 1080
+HEIGHT = 720    
+pygame.display.set_caption('TRUCO!')
+screen = pygame.display.set_mode((WIDTH, HEIGHT),0,32)
 
-WIDTH = 1200
-HEIGHT = 800
-window = pygame.display.set_mode((WIDTH, HEIGHT))
+font = pygame.font.SysFont(None, 20)
 
+def draw_text(text, font, color, surface, x, y):
+    textobj = font.render(text, 1, color)
+    textrect = textobj.get_rect()
+    textrect.topleft = (x, y)
+    surface.blit(textobj, textrect)
 
-game = True
+click = False
 
-i = 0
+def main_menu():
+    while True:
 
-while game:
-    
-    for event in pygame.event.get():
+        screen.fill((0,0,0))
+        draw_text('main menu', font, (255, 255, 255), screen, 20, 20)
+
+        mx, my = pygame.mouse.get_pos()
+
+        button_1 = pygame.Rect(50, 100, 200, 50)
+        button_2 = pygame.Rect(50, 200, 200, 50)
+        if button_1.collidepoint((mx, my)):
+            if click:
+                game()
+        if button_2.collidepoint((mx, my)):
+            if click:
+                options()
+        pygame.draw.rect(screen, (255, 0, 0), button_1)
+        pygame.draw.rect(screen, (255, 0, 0), button_2)
+
+        click = False
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
+            if event.type == MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    click = True
+
+        pygame.display.update()
+        mainClock.tick(60)
+
+def game():
+    i   = 0
+    game=True
+    while game:
         
-        if event.type == pygame.QUIT:
-            game = False
+        for event in pygame.event.get():
+            
+            if event.type == pygame.QUIT:
+                game = False
 
-    # ----- Gera saídas
-    window.fill((0, 0, 0))  # Preenche com a cor branca
-    tela_fundo = pygame.image.load('Pygame/table_top.png')
-    tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
-    window.blit(tela_fundo,(i,0))
-    if i < 1:
-        for i in range(len(cartas_na_mesa[0])):
-            for t in range(len(cartas_na_mesa)):
-                imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_na_mesa[t][i]])
-                maos = pygame.transform.scale(imagem_carta, (100, 130))
-                imagem_manilhas = pygame.image.load(dicionario_imagens_total[manilha_sorteada[t]])
-                manilhas = pygame.transform.scale(imagem_manilhas, (100, 130))
-                window.blit(maos, [10+150*t, 10+60*i])
-                window.blit(manilhas, [10+50*t, 10+600])
-                pygame.display.update()
-        i += 1
-
-# ===== Finalização =====
-pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
+        # ----- Gera saídas
+        screen.fill((0, 0, 0))  # Preenche com a cor branca
+        tela_fundo = pygame.image.load('Pygame/table_top.png')
+        tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
+        screen.blit(tela_fundo,(i,0))
+        if i < 1:
+            for i in range(len(cartas_na_mesa[0])):
+                for t in range(len(cartas_na_mesa)):
+                    imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_na_mesa[t][i]])
+                    maos = pygame.transform.scale(imagem_carta, (100, 130))
+                    imagem_manilhas = pygame.image.load(dicionario_imagens_total[manilha_sorteada[t]])
+                    manilhas = pygame.transform.scale(imagem_manilhas, (100, 130))
+                    screen.blit(maos, [10+150*t, 10+60*i])
+                    screen.blit(manilhas, [10+50*t, 10+600])
+                    pygame.display.update()
+            i += 1
 
 
+def options():
+    running = True
+    while running:
+        screen.fill((0,0,0))
+
+        draw_text('options', font, (255, 255, 255), screen, 20, 20)
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    running = False
+        
+        pygame.display.update()
+        mainClock.tick(60)
+
+main_menu()
        
         
 
