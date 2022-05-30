@@ -1,4 +1,5 @@
 import random
+from turtle import pos
 import pygame, sys
 import funcoes
 from pygame.locals import *
@@ -15,6 +16,7 @@ dic_valor = {'A':'ace','Q':"queen",'K':'king','J':'jack'}
 list1 = [1, 2, 3]
 list2 = [1]
 dicionario_imagens_ouro={}
+back_card = (r"Pygame\icon\back_card.png")
 for carta in lista_ouros:
     if carta[1] in dic_valor:
         imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_diamonds.png')  
@@ -49,10 +51,13 @@ for carta in lista_paus:
 dicionario_imagens_1 = (dicionario_imagens_ouro|dicionario_imagens_espadas)
 dicionario_imagens_2 = (dicionario_imagens_1|dicionario_imagens_copas)
 dicionario_imagens_total = (dicionario_imagens_2|dicionario_imagens_paus)
-        
-cartas_na_mesa = funcoes.distribui_mao(funcoes.tornar_carta(lista_geral))
-manilha_sorteada = funcoes.achar_manilhas(funcoes.tornar_carta(lista_geral)[1],lista_geral)
 
+carta_tornada=funcoes.tornar_carta(lista_geral)  
+conserta = [lista_geral,carta_tornada]      
+cartas_na_mesa = funcoes.distribui_mao(carta_tornada)
+
+manilha_sorteada = funcoes.achar_manilhas(carta_tornada[1],lista_geral)
+cartas_da_rodada = []
 
 
 
@@ -137,12 +142,29 @@ def game():
         if i < 1:
             for i in range(len(cartas_na_mesa[0])):
                 for t in range(len(cartas_na_mesa)):
-                    imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_na_mesa[t][i]])
+                    if cartas_na_mesa[t][i] in cartas_da_rodada:
+                        imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_na_mesa[t][i]])
+                    else:
+                        imagem_carta = pygame.image.load(back_card)
                     maos = pygame.transform.scale(imagem_carta, (100, 130))
-                    imagem_manilhas = pygame.image.load(dicionario_imagens_total[manilha_sorteada[t]])
+                    imagem_manilhas = pygame.image.load(dicionario_imagens_total[carta_tornada[1]])
                     manilhas = pygame.transform.scale(imagem_manilhas, (100, 130))
-                    screen.blit(maos, [10+150*t, 10+60*i])
-                    screen.blit(manilhas, [10+50*t, 10+600])
+                    if t == 0:
+                        posx=0
+                        posy=180+140*i
+                    elif t == 1:
+                        posx=360+110*i
+                        posy=0
+                    elif t == 2:
+                        posx=980
+                        posy=180+140*i
+                    elif t ==3:
+                        posx = 360+110*i
+                        posy = 590
+
+                    
+                    screen.blit(maos, [posx, posy])
+                    screen.blit(manilhas, [470, 300])
                     pygame.display.update()
             i += 1
 
