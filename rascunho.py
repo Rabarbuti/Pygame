@@ -77,13 +77,18 @@ click = False
 def main_menu():
     while True:
 
+        fonte = pygame.font.SysFont(None, 40)
+        fonte2  = pygame.font.SysFont(None, 150)
         screen.fill((0,0,0))
-        draw_text('main menu', font, (255, 255, 255), screen, 20, 20)
 
         mx, my = pygame.mouse.get_pos()
 
         button_1 = pygame.Rect(50, 100, 200, 50)
         button_2 = pygame.Rect(50, 200, 200, 50)
+        tela_fundo = pygame.image.load('Pygame/table_top.png')
+        tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
+        draw_text('main menu', font, (255, 255, 255), screen, 20, 20)
+        screen.blit(tela_fundo,(0,0))
         if button_1.collidepoint((mx, my)):
             if click:
                 game()
@@ -105,6 +110,11 @@ def main_menu():
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
+        
+        draw_text('PLAY', fonte, (255, 255, 255), screen, 110, 116)
+        draw_text('How To Play', fonte, (255, 255, 255), screen, 65, 210)
+        draw_text('As escuras', fonte2, (255, 0, 0), screen, 450, 50)
+        draw_text('com Maciel', fonte2, (255, 0, 0), screen, 450, 150)
 
         pygame.display.update()
         mainClock.tick(60)
