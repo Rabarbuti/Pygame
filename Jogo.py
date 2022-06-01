@@ -141,9 +141,14 @@ def game():
                     carta = lista_zuada[i]
                     if carta['rect'].collidepoint(mx, my):
                         print(f'clicou na {i}')
-                        print(carta['jogador'])
-                        print(carta['i'])
-                        del cartas_na_mesa[carta['jogador']][carta['i']]
+                        print('Jogador:')
+                        print(carta['jogador']+1)
+                        print('Carta:')
+                        print(carta['carta'])
+                        cartas_da_rodada.append(cartas_na_mesa[carta['jogador']][carta['carta']])
+                        print(cartas_da_rodada)
+                        del cartas_na_mesa[carta['jogador']][carta['carta']]
+                        #imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_da_rodada])
 
             
             if event.type == pygame.QUIT:
@@ -177,7 +182,7 @@ def game():
                         posx = 360+110*i
                         posy = 590
 
-                    lista_zuada.append({'rect':pygame.Rect(posx, posy, 100, 130), 'jogador': t, 'i': i})
+                    lista_zuada.append({'rect':pygame.Rect(posx, posy, 100, 130), 'jogador': t, 'carta': i})
                     screen.blit(maos, [posx, posy])
                     screen.blit(manilhas, [470, 300])
                     pygame.display.update()
