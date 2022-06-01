@@ -81,9 +81,9 @@ click = False
 
 def main_menu():
     while True:
-
+        
         fonte = pygame.font.SysFont(None, 40)
-        fonte2  = pygame.font.SysFont(None, 150)
+        fonte2  = pygame.font.SysFont("Algerian", 110)
         screen.fill((0,0,0))
 
         mx, my = pygame.mouse.get_pos()
@@ -118,8 +118,8 @@ def main_menu():
         
         draw_text('PLAY', fonte, (255, 255, 255), screen, 110, 116)
         draw_text('How To Play', fonte, (255, 255, 255), screen, 65, 210)
-        draw_text('As escuras', fonte2, (255, 0, 0), screen, 450, 50)
-        draw_text('com Maciel', fonte2, (255, 0, 0), screen, 450, 150)
+        draw_text('As escuras', fonte2, (255, 0, 0), screen, 370, 50)
+        draw_text('com Maciel', fonte2, (255, 0, 0), screen, 380, 170)
 
         pygame.display.update()
         mainClock.tick(60)
@@ -161,8 +161,6 @@ def game():
                     elif t ==3:
                         posx = 360+110*i
                         posy = 590
-
-                    
                     screen.blit(maos, [posx, posy])
                     screen.blit(manilhas, [470, 300])
                     pygame.display.update()
