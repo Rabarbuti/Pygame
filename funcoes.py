@@ -137,3 +137,74 @@ for carta in lista_paus:
     else:
         imagem=(f'Pygame\cartas\{carta[1]}_of_clubs.png')
     dicionario_imagens_paus[carta]=pygame.image.load(imagem)
+def vencedor(rodada, manilhas):
+    carta_p1 = rodada[0]
+    carta_p2 = rodada[1]
+    carta_p3 = rodada[2]
+    carta_p4 = rodada[3]
+    cartas = [carta_p1, carta_p2, carta_p3, carta_p4]
+    manilha = False
+    for carta in cartas:
+        if carta[1:2] == manilhas[0][1:2]:
+            manilha = True
+    if manilha:
+        qtd_manilhas = 0
+        jogadores_com_manilha = []
+        for carta in cartas:
+            if carta[1:2] == manilhas[0][1:2]:
+                jogadores_com_manilha.append("P{}".format(cartas.index(carta) + 1))
+                qtd_manilhas+=1
+
+        if qtd_manilhas == 1:
+            return jogadores_com_manilha[0]
+
+        maior_carta = ""
+        manilhas = []
+        for jogador in jogadores_com_manilha:
+            indice = int(jogador[1:2]) - 1
+            manilhas.append(cartas[indice])
+
+        naipes = ['O', 'E', 'C', 'P']
+        count = 0
+        for manilha in manilhas:
+            if count == 0:
+                maior_carta = manilha
+            else:
+                if manilha[1:2] == 'P':
+                    maior_carta = manilha
+                else:
+                    idx = naipes.index(manilha[0:1])
+                    maior_idx = naipes.index(maior_carta[0:1])
+
+                    if (idx > maior_idx):
+                        maior_carta = manilha
+            count+=1
+
+        ganhador_idx = cartas.index(maior_carta)
+        return 'P{}'.format(ganhador_idx+1) 
+
+    else:
+        ordem = ['4', '5', '6', '7', 'Q', 'J', 'K', 'A', '2', '3']
+
+        maior_carta_indice = 0
+        empatou = False
+        carta_vencedora = ""
+        carta_indice = 0
+
+        for carta in cartas:
+            if ordem.index(str(carta[1:2])) > maior_carta_indice:
+                maior_carta_indice = ordem.index(str(carta[1:2]))
+                carta_indice = cartas.index(carta)
+                carta_vencedora = carta
+        for carta in cartas:
+            if cartas.index(carta) != carta_indice:
+                if ordem.index(str(carta[1:2])) == maior_carta_indice:
+                    empatou = True
+
+        if empatou:
+            return -1
+
+        carta_vencedora_indice = cartas.index(carta_vencedora)
+        ganhador = 'P{}'.format(carta_vencedora_indice+1)
+
+        return ganhador
