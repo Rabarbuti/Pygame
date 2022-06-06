@@ -1,6 +1,5 @@
 import random
 from turtle import pos
-from matplotlib.animation import FuncAnimation
 import pygame, sys
 import funcoes
 from pygame.locals import *
@@ -74,6 +73,7 @@ pygame.display.set_caption('TRUCO!')
 screen = pygame.display.set_mode((WIDTH, HEIGHT),0,32)
 
 font = pygame.font.SysFont(None, 20)
+font1 = pygame.font.SysFont(None, 40)
 
 verso = pygame.image.load(back_card)
 
@@ -131,15 +131,29 @@ def main_menu():
         mainClock.tick(60)
 
 clock = pygame.time.Clock()
-FPS = 15
+FPS = 60
 
-fase = "escolher"
+class Truco:
+    fase = "escolher"
+
+def desenha_na_tela(texto):
+    return font1.render(texto, True, (0, 0, 0))
 
 def game():
     i   = 0
     game=True
+
+    time1 = 0
+    time2 = 0
+    empate = 0
     while game:
         clock.tick(FPS)
+
+        if time1 == 2 and empate < 2:
+            print()
+        if time2 == 2 and empate < 2:
+            print()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -157,8 +171,9 @@ def game():
                         cartas_da_rodada.append(cartas_na_mesa[carta['jogador']][carta['carta']])
                         print(cartas_da_rodada)
 
-                        if len(cartas_da_rodada == 4):
-                            fase = "ganhador"
+                        if len(cartas_da_rodada) % 4 == 0:
+                            Truco.fase = "ganhador"
+                            print(Truco.fase)
                         #del cartas_na_mesa[carta['jogador']][carta['carta']]
                         #imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_da_rodada])
 
@@ -197,14 +212,35 @@ def game():
 
                 lista_zuada.append({'rect':pygame.Rect(posx, posy, 100, 130), 'jogador': t, 'carta': i})
                 screen.blit(maos, [posx, posy])
+        
         imagem_manilhas = pygame.image.load(dicionario_imagens_total[carta_tornada[1]])
         manilhas = pygame.transform.scale(imagem_manilhas, (100, 130))
         screen.blit(manilhas, [470, 300])
 
-        if fase == "ganhador":
-            #funcao de ver o ganhador
-            #apagar as cartas usadas
-            fase = "escolher"
+        if Truco.fase == "ganhador":
+            vencedor = funcoes.vencedor(cartas_da_rodada, manilha_sorteada)
+
+            if vencedor == -1:
+                empate += 1
+            else:
+                if vencedor == 'P1' or vencedor == 'P3':
+                    time1 += 1
+                else:
+                    time2 += 1
+
+            print('tratando')
+            for mao in cartas_na_mesa:
+                print(f' mao: {mao}')
+                for carta in mao:
+                    print(f'carta: {carta}')
+                    if carta in cartas_da_rodada:
+                        mao.remove(carta)
+                        print(f'cartas {cartas_na_mesa}')
+            
+            Truco.fase = "escolher"
+
+        screen.blit(desenha_na_tela('Time 1: ' + str(time1)), (WIDTH - 150, 10))
+        screen.blit(desenha_na_tela('Time 2: ' + str(time2)), (WIDTH - 150, 40))
 
         pygame.display.update()
 
