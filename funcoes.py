@@ -138,16 +138,22 @@ for carta in lista_paus:
         imagem=(f'Pygame\cartas\{carta[1]}_of_clubs.png')
     dicionario_imagens_paus[carta]=pygame.image.load(imagem)
 def vencedor(rodada, manilhas):
+    print(rodada)
     carta_p1 = rodada[0]
     carta_p2 = rodada[1]
     carta_p3 = rodada[2]
     carta_p4 = rodada[3]
+
     cartas = [carta_p1, carta_p2, carta_p3, carta_p4]
+
     manilha = False
     for carta in cartas:
         if carta[1:2] == manilhas[0][1:2]:
             manilha = True
+            
     if manilha:
+        print("com manilha")
+
         qtd_manilhas = 0
         jogadores_com_manilha = []
         for carta in cartas:
@@ -184,6 +190,7 @@ def vencedor(rodada, manilhas):
         return 'P{}'.format(ganhador_idx+1) 
 
     else:
+        print("sem manilha")
         ordem = ['4', '5', '6', '7', 'Q', 'J', 'K', 'A', '2', '3']
 
         maior_carta_indice = 0
@@ -196,6 +203,8 @@ def vencedor(rodada, manilhas):
                 maior_carta_indice = ordem.index(str(carta[1:2]))
                 carta_indice = cartas.index(carta)
                 carta_vencedora = carta
+        
+        print(maior_carta_indice)
         for carta in cartas:
             if cartas.index(carta) != carta_indice:
                 if ordem.index(str(carta[1:2])) == maior_carta_indice:
