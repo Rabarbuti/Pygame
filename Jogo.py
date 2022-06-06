@@ -1,5 +1,6 @@
 import random
 from turtle import pos
+from matplotlib.animation import FuncAnimation
 import pygame, sys
 import funcoes
 from pygame.locals import *
@@ -74,6 +75,8 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT),0,32)
 
 font = pygame.font.SysFont(None, 20)
 
+verso = pygame.image.load(back_card)
+
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
     textrect = textobj.get_rect()
@@ -127,15 +130,21 @@ def main_menu():
         pygame.display.update()
         mainClock.tick(60)
 
+clock = pygame.time.Clock()
+FPS = 15
+
+fase = "escolher"
+
 def game():
     i   = 0
     game=True
     while game:
+        clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONUP:
                 mx , my = pygame.mouse.get_pos()
                 for i in range(len(lista_zuada)):
                     carta = lista_zuada[i]
@@ -147,46 +156,57 @@ def game():
                         print(carta['carta'])
                         cartas_da_rodada.append(cartas_na_mesa[carta['jogador']][carta['carta']])
                         print(cartas_da_rodada)
-                        del cartas_na_mesa[carta['jogador']][carta['carta']]
+
+                        if len(cartas_da_rodada == 4):
+                            fase = "ganhador"
+                        #del cartas_na_mesa[carta['jogador']][carta['carta']]
                         #imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_da_rodada])
 
             
             if event.type == pygame.QUIT:
                 game = False
-
+        lista_zuada=[]
         # ----- Gera saídas
         screen.fill((0, 0, 0))  # Preenche com a cor branca
         tela_fundo = pygame.image.load('Pygame/table_top.png')
         tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
         screen.blit(tela_fundo,(i,0))
-        if i < 1:
-            for i in range(len(cartas_na_mesa[0])): 
-                for t in range(len(cartas_na_mesa)):
-                    if cartas_na_mesa[t][i] in cartas_da_rodada:
-                        imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_na_mesa[t][i]])
-                    else:
-                        imagem_carta = pygame.image.load(back_card)
-                    maos = pygame.transform.scale(imagem_carta, (100, 130))
-                    imagem_manilhas = pygame.image.load(dicionario_imagens_total[carta_tornada[1]])
-                    manilhas = pygame.transform.scale(imagem_manilhas, (100, 130))
-                    if t == 0:
-                        posx=0
-                        posy=180+140*i
-                    elif t == 1:
-                        posx=360+110*i
-                        posy=0
-                    elif t == 2:
-                        posx=980
-                        posy=180+140*i
-                    elif t ==3:
-                        posx = 360+110*i
-                        posy = 590
+        
+        for t in range(len(cartas_na_mesa)):
+            for i in range(len(cartas_na_mesa[t])): 
+            
+                #print("procurando",cartas_na_mesa[t][i],cartas_da_rodada)
+                if cartas_na_mesa[t][i] in cartas_da_rodada:
+                    imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_na_mesa[t][i]])
+                    #print("load da carta")
+                else:
+                    imagem_carta = verso
+                maos = pygame.transform.scale(imagem_carta, (100, 130))
+                if t == 0:
+                    posx=0
+                    posy=180+140*i
+                elif t == 1:
+                    posx=360+110*i
+                    posy=0
+                elif t == 2:
+                    posx=980
+                    posy=180+140*i
+                elif t ==3:
+                    posx = 360+110*i
+                    posy = 590
 
-                    lista_zuada.append({'rect':pygame.Rect(posx, posy, 100, 130), 'jogador': t, 'carta': i})
-                    screen.blit(maos, [posx, posy])
-                    screen.blit(manilhas, [470, 300])
-                    pygame.display.update()
-            i += 1
+                lista_zuada.append({'rect':pygame.Rect(posx, posy, 100, 130), 'jogador': t, 'carta': i})
+                screen.blit(maos, [posx, posy])
+        imagem_manilhas = pygame.image.load(dicionario_imagens_total[carta_tornada[1]])
+        manilhas = pygame.transform.scale(imagem_manilhas, (100, 130))
+        screen.blit(manilhas, [470, 300])
+
+        if fase == "ganhador":
+            #funcao de ver o ganhador
+            #apagar as cartas usadas
+            fase = "escolher"
+
+        pygame.display.update()
 
 
 def options():
