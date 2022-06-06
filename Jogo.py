@@ -3,6 +3,7 @@ from turtle import pos
 import pygame, sys
 import funcoes
 from pygame.locals import *
+import time
 lista_ouros=['O4','O5','O6','O7','OQ','OJ','OK','OA','O2','O3']
 #espadas
 lista_espadas=['E4','E5','E6','E7','EQ','EJ','EK','EA','E2','E3']
@@ -55,9 +56,11 @@ dicionario_imagens_total = (dicionario_imagens_2|dicionario_imagens_paus)
 carta_tornada=funcoes.tornar_carta(lista_geral)  
 conserta = [lista_geral,carta_tornada]      
 cartas_na_mesa = funcoes.distribui_mao(carta_tornada)
+print(cartas_na_mesa)
 
 manilha_sorteada = funcoes.achar_manilhas(carta_tornada[1],lista_geral)
 cartas_da_rodada = []
+lista_zuada = []
 
 
 
@@ -128,8 +131,25 @@ def game():
     i   = 0
     game=True
     while game:
-        
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                mx , my = pygame.mouse.get_pos()
+                for i in range(len(lista_zuada)):
+                    carta = lista_zuada[i]
+                    if carta['rect'].collidepoint(mx, my):
+                        print(f'clicou na {i}')
+                        print('Jogador:')
+                        print(carta['jogador']+1)
+                        print('Carta:')
+                        print(carta['carta'])
+                        cartas_da_rodada.append(cartas_na_mesa[carta['jogador']][carta['carta']])
+                        print(cartas_da_rodada)
+                        del cartas_na_mesa[carta['jogador']][carta['carta']]
+                        #imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_da_rodada])
+
             
             if event.type == pygame.QUIT:
                 game = False
@@ -140,7 +160,7 @@ def game():
         tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
         screen.blit(tela_fundo,(i,0))
         if i < 1:
-            for i in range(len(cartas_na_mesa[0])):
+            for i in range(len(cartas_na_mesa[0])): 
                 for t in range(len(cartas_na_mesa)):
                     if cartas_na_mesa[t][i] in cartas_da_rodada:
                         imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_na_mesa[t][i]])
@@ -161,6 +181,8 @@ def game():
                     elif t ==3:
                         posx = 360+110*i
                         posy = 590
+
+                    lista_zuada.append({'rect':pygame.Rect(posx, posy, 100, 130), 'jogador': t, 'carta': i})
                     screen.blit(maos, [posx, posy])
                     screen.blit(manilhas, [470, 300])
                     pygame.display.update()
