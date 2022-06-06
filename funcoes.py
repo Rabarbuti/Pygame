@@ -68,43 +68,7 @@ def distribui_mao(lista):
         P4.append(carta_sorteada)
         lista_geral.remove(carta_sorteada)
     return [P1,P2,P3,P4]
-'''def ganhador(lista_jogadores,lista_rodada,manilhas):
-    i=0
-    j=0
-    lista_manilhas_usadas=[]
-    P1=lista_jogadores[0]
-    P2=lista_jogadores[1]
-    P3=lista_jogadores[2]
-    P4=lista_jogadores[3]
-    a=intersection(manilhas,lista_rodada)
-    if len(a)==1:
-        if a[0] in P1:
-            return 'P1'
-        if a[0] in P2:
-            return 'P2'
-        if a[0] in P3:
-            return 'P3'
-        if a[0] in P4:
-            return 'P4'
-    if len(a)>1:
-        while i<=4:
-            while j<=4:
-                if manilhas[i]==a[j]:
-                    lista_manilhas_usadas.append(manilhas[i])
-                    j+=1
-                else:
-                    j+=1
-            i+=1
-        manilha_vencedora=lista_manilhas_usadas[-1]
-        if manilha_vencedora in P1:
-            return 'P1'
-        if manilha_vencedora in P2:
-            return 'P2'
-        if manilha_vencedora in P3:
-            return 'P3'
-        if manilha_vencedora in P4:
-            return 'P4'
-    if len(a)==0:'''
+
         
 dicionario_imagens_ouro={}
 for carta in lista_ouros:

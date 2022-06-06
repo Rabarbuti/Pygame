@@ -163,11 +163,11 @@ def game():
                 for i in range(len(lista_zuada)):
                     carta = lista_zuada[i]
                     if carta['rect'].collidepoint(mx, my):
-                        print(f'clicou na {i}')
+                        '''print(f'clicou na {i}')
                         print('Jogador:')
                         print(carta['jogador']+1)
                         print('Carta:')
-                        print(carta['carta'])
+                        print(carta['carta'])'''
                         cartas_da_rodada.append(cartas_na_mesa[carta['jogador']][carta['carta']])
                         print(cartas_da_rodada)
 
@@ -219,14 +219,18 @@ def game():
 
         if Truco.fase == "ganhador":
             vencedor = funcoes.vencedor(cartas_da_rodada, manilha_sorteada)
+            print(f'o vencedor foi: {vencedor}')
 
             if vencedor == -1:
                 empate += 1
+                time1 += 1
+                time2 += 1
+
+            elif vencedor == 'P1' or vencedor == 'P3':
+                time1 += 1
+
             else:
-                if vencedor == 'P1' or vencedor == 'P3':
-                    time1 += 1
-                else:
-                    time2 += 1
+                time2 += 1
 
             print('tratando')
             for mao in cartas_na_mesa:
