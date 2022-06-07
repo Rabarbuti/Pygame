@@ -106,7 +106,7 @@ def vencedor(rodada, manilhas):
     carta_p1 = rodada[0]
     carta_p2 = rodada[1]
     carta_p3 = rodada[2]
-    carta_p4 = rodada[3]
+    carta_p4 = rodada[3] 
 
     cartas = [carta_p1, carta_p2, carta_p3, carta_p4]
 
@@ -175,9 +175,9 @@ def vencedor(rodada, manilhas):
                     empatou = True
 
         if empatou:
-            return -1
+            return -1 
 
         carta_vencedora_indice = cartas.index(carta_vencedora)
         ganhador = 'P{}'.format(carta_vencedora_indice+1)
 
-        return ganhador
+        return ganhador 

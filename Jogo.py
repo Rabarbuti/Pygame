@@ -61,6 +61,7 @@ print(cartas_na_mesa)
 manilha_sorteada = funcoes.achar_manilhas(carta_tornada[1],lista_geral)
 cartas_da_rodada = []
 lista_zuada = []
+cartas_para_excluir = []
 
 
 
@@ -169,6 +170,7 @@ def game():
                         print('Carta:')
                         print(carta['carta'])'''
                         cartas_da_rodada.append(cartas_na_mesa[carta['jogador']][carta['carta']])
+                        cartas_para_excluir.append(cartas_na_mesa[carta['jogador']][carta['carta']])
                         print(cartas_da_rodada)
 
                         if len(cartas_da_rodada) % 4 == 0:
@@ -191,7 +193,7 @@ def game():
             for i in range(len(cartas_na_mesa[t])): 
             
                 #print("procurando",cartas_na_mesa[t][i],cartas_da_rodada)
-                if cartas_na_mesa[t][i] in cartas_da_rodada:
+                if cartas_na_mesa[t][i] in cartas_para_excluir:
                     imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_na_mesa[t][i]])
                     #print("load da carta")
                 else:
@@ -220,6 +222,8 @@ def game():
         if Truco.fase == "ganhador":
             vencedor = funcoes.vencedor(cartas_da_rodada, manilha_sorteada)
             print(f'o vencedor foi: {vencedor}')
+            del cartas_da_rodada[:]
+            
 
             if vencedor == -1:
                 empate += 1
@@ -237,9 +241,10 @@ def game():
                 print(f' mao: {mao}')
                 for carta in mao:
                     print(f'carta: {carta}')
-                    if carta in cartas_da_rodada:
+                    if carta in cartas_para_excluir:
                         mao.remove(carta)
                         print(f'cartas {cartas_na_mesa}')
+            
             
             Truco.fase = "escolher"
 
