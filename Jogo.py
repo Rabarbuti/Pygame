@@ -97,7 +97,7 @@ def main_menu():
 
         button_1 = pygame.Rect(50, 100, 200, 50)
         button_2 = pygame.Rect(50, 200, 200, 50)
-        tela_fundo = pygame.image.load('Pygame\table_top.png')
+        tela_fundo = pygame.image.load('Pygame/table_top.png')
         tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
         draw_text('main menu', font, (255, 255, 255), screen, 20, 20)
         screen.blit(tela_fundo,(0,0))
@@ -141,8 +141,7 @@ def desenha_na_tela(texto):
     return font1.render(texto, True, (0, 0, 0))
 
 def game():
-    #tentei colocar esse del aqui dago, mas acho que precisa ser em outro lugar (ele dá out of range no programa funçao)
-    #del cartas_da_rodada[:]
+
     fonte2  = pygame.font.SysFont("Algerian", 110)
     i   = 0
     game=True
@@ -153,10 +152,11 @@ def game():
     while game:
         clock.tick(FPS)
 
-        if time1 == 2:
-            draw_text(('Time 1 Venceu '),fonte2, (255, 255, 255), screen, 3, 2)
+        if time1 == 2 and empate < 2:
+            time1_vencedor()
         if time2 == 2 and empate < 2:
-            print()
+            time2_vencedor()
+            
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -183,7 +183,7 @@ def game():
         lista_zuada=[]
         # ----- Gera saídas
         screen.fill((0, 0, 0))  # Preenche com a cor branca
-        tela_fundo = pygame.image.load('Pygame\table_top.png')
+        tela_fundo = pygame.image.load('Pygame/table_top.png')
         tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
         screen.blit(tela_fundo,(i,0))
         
@@ -296,10 +296,11 @@ def time1_vencedor():
     j = 300
     while running:
 
-        fonte = pygame.font.SysFont(None, 40)
+        fonte = pygame.font.SysFont(None, 35)
+        fonte2 = pygame.font.SysFont(None, 80)
         mx, my = pygame.mouse.get_pos()
         button_4 = pygame.Rect(300,400, 230, 30)
-        tela_fundo = pygame.image.load('Pygame\table_top.png')
+        tela_fundo = pygame.image.load('Pygame/table_top.png')
         while i < 30:
             tela_fundo = pygame.transform.scale(tela_fundo,(j, (j+0)))
             pygame.display.update()
@@ -311,7 +312,8 @@ def time1_vencedor():
 
         if button_4.collidepoint((mx, my)):
             if pygame.mouse.get_pressed()[0] == True:
-                main_menu()
+                del cartas_da_rodada[:]
+                game()
         pygame.draw.rect(screen, (255, 0, 0), button_4)
 
         for event in pygame.event.get():
@@ -326,29 +328,36 @@ def time1_vencedor():
                 if event.button == 1:
                     click = True
             draw_text('Jogar Novamente', fonte, (255, 255, 255), screen, 305, 404)
+            draw_text(('Time 1 Venceu '),fonte2, (255, 255, 255), screen, 360, 300)
             pygame.display.update()
         mainClock.tick(60)
 
 def time2_vencedor():
     running = True
     i = 0
+    j = 300
     while running:
-        
 
-        draw_text('options', font, (255, 255, 255), screen, 20, 20)
-        fonte = pygame.font.SysFont(None, 40)
+        fonte = pygame.font.SysFont(None, 35)
+        fonte2 = pygame.font.SysFont(None, 80)
         mx, my = pygame.mouse.get_pos()
-        button_5 = pygame.Rect(0,0, 100, 30)
-        tela_fundo = pygame.image.load('Pygame\Regras.png')
+        button_4 = pygame.Rect(300,400, 230, 30)
+        tela_fundo = pygame.image.load('Pygame/table_top.png')
+        while i < 30:
+            tela_fundo = pygame.transform.scale(tela_fundo,(j, (j+0)))
+            pygame.display.update()
+            clock = pygame.time.Clock()
+            clock.tick(5)
+            screen.blit(tela_fundo,(0,0))
+            j += 50
+            i +=1
 
-        tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
-        draw_text('main menu', font, (255, 255, 255), screen, 20, 20)
-        screen.blit(tela_fundo,(0,0))
-
-        if button_5.collidepoint((mx, my)):
+        if button_4.collidepoint((mx, my)):
             if pygame.mouse.get_pressed()[0] == True:
-                main_menu()
-        pygame.draw.rect(screen, (255, 0, 0), button_5)
+                del cartas_da_rodada[:]
+                game()
+                
+        pygame.draw.rect(screen, (255, 0, 0), button_4)
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -361,7 +370,8 @@ def time2_vencedor():
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
-            draw_text('Return', fonte, (255, 255, 255), screen, 3, 2)
+            draw_text('Jogar Novamente', fonte, (255, 255, 255), screen, 305, 404)
+            draw_text(('Time 2 Venceu '),fonte2, (255, 255, 255), screen, 360, 300)
             pygame.display.update()
         mainClock.tick(60)
 
