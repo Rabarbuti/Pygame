@@ -17,36 +17,36 @@ dic_valor = {'A':'ace','Q':"queen",'K':'king','J':'jack'}
 list1 = [1, 2, 3]
 list2 = [1]
 dicionario_imagens_ouro={}
-back_card = (r"Pygame\icon\back_card.png")
+back_card = (r"icon\back_card.png")
 for carta in lista_ouros:
     if carta[1] in dic_valor:
-        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_diamonds.png')  
+        imagem=(f'cartas\{dic_valor[carta[1]]}_of_diamonds.png')  
     else:
-        imagem=(f'Pygame\cartas\{carta[1]}_of_diamonds.png')
+        imagem=(f'cartas\{carta[1]}_of_diamonds.png')
     dicionario_imagens_ouro[carta]=(imagem)
 
 dicionario_imagens_espadas = {}
 for carta in lista_espadas:
     if carta[1] in dic_valor:
-        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_spades.png')  
+        imagem=(f'cartas\{dic_valor[carta[1]]}_of_spades.png')  
     else:
-        imagem=(f'Pygame\cartas\{carta[1]}_of_spades.png')
+        imagem=(f'cartas\{carta[1]}_of_spades.png')
     dicionario_imagens_espadas[carta]=(imagem)
 
 dicionario_imagens_copas = {}
 for carta in lista_copas:
     if carta[1] in dic_valor:
-        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_hearts.png')  
+        imagem=(f'cartas\{dic_valor[carta[1]]}_of_hearts.png')  
     else:
-        imagem=(f'Pygame\cartas\{carta[1]}_of_hearts.png')
+        imagem=(f'cartas\{carta[1]}_of_hearts.png')
     dicionario_imagens_copas[carta]=(imagem)
 
 dicionario_imagens_paus = {}
 for carta in lista_paus:
     if carta[1] in dic_valor:
-        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_clubs.png')  
+        imagem=(f'cartas\{dic_valor[carta[1]]}_of_clubs.png')  
     else:
-        imagem=(f'Pygame\cartas\{carta[1]}_of_clubs.png')
+        imagem=(f'cartas\{carta[1]}_of_clubs.png')
     dicionario_imagens_paus[carta]=(imagem)
 
 dicionario_imagens_1 = (dicionario_imagens_ouro|dicionario_imagens_espadas)
@@ -61,6 +61,7 @@ print(cartas_na_mesa)
 manilha_sorteada = funcoes.achar_manilhas(carta_tornada[1],lista_geral)
 cartas_da_rodada = []
 lista_zuada = []
+cartas_para_excluir = []
 
 
 
@@ -96,7 +97,7 @@ def main_menu():
 
         button_1 = pygame.Rect(50, 100, 200, 50)
         button_2 = pygame.Rect(50, 200, 200, 50)
-        tela_fundo = pygame.image.load('Pygame/table_top.png')
+        tela_fundo = pygame.image.load('table_top.png')
         tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
         draw_text('main menu', font, (255, 255, 255), screen, 20, 20)
         screen.blit(tela_fundo,(0,0))
@@ -169,6 +170,7 @@ def game():
                         print('Carta:')
                         print(carta['carta'])'''
                         cartas_da_rodada.append(cartas_na_mesa[carta['jogador']][carta['carta']])
+                        cartas_para_excluir.append(cartas_na_mesa[carta['jogador']][carta['carta']])
                         print(cartas_da_rodada)
 
                         if len(cartas_da_rodada) % 4 == 0:
@@ -183,7 +185,7 @@ def game():
         lista_zuada=[]
         # ----- Gera saídas
         screen.fill((0, 0, 0))  # Preenche com a cor branca
-        tela_fundo = pygame.image.load('Pygame/table_top.png')
+        tela_fundo = pygame.image.load('table_top.png')
         tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
         screen.blit(tela_fundo,(i,0))
         
@@ -191,7 +193,7 @@ def game():
             for i in range(len(cartas_na_mesa[t])): 
             
                 #print("procurando",cartas_na_mesa[t][i],cartas_da_rodada)
-                if cartas_na_mesa[t][i] in cartas_da_rodada:
+                if cartas_na_mesa[t][i] in cartas_para_excluir:
                     imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_na_mesa[t][i]])
                     #print("load da carta")
                 else:
@@ -220,6 +222,8 @@ def game():
         if Truco.fase == "ganhador":
             vencedor = funcoes.vencedor(cartas_da_rodada, manilha_sorteada)
             print(f'o vencedor foi: {vencedor}')
+            del cartas_da_rodada[:]
+            
 
             if vencedor == -1:
                 empate += 1
@@ -237,9 +241,10 @@ def game():
                 print(f' mao: {mao}')
                 for carta in mao:
                     print(f'carta: {carta}')
-                    if carta in cartas_da_rodada:
+                    if carta in cartas_para_excluir:
                         mao.remove(carta)
                         print(f'cartas {cartas_na_mesa}')
+            
             
             Truco.fase = "escolher"
 
@@ -267,7 +272,7 @@ def options():
         mainClock.tick(60)
 
 main_menu()
-       
+      
         
 
 

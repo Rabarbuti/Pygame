@@ -73,40 +73,40 @@ def distribui_mao(lista):
 dicionario_imagens_ouro={}
 for carta in lista_ouros:
     if carta[1] in dic_valor:
-        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_diamonds.png')  
+        imagem=(f'cartas\{dic_valor[carta[1]]}_of_diamonds.png')  
     else:
-        imagem=(f'Pygame\cartas\{carta[1]}_of_diamonds.png')
+        imagem=(f'cartas\{carta[1]}_of_diamonds.png')
     dicionario_imagens_ouro[carta]=pygame.image.load(imagem)
 
 dicionario_imagens_espadas = {}
 for carta in lista_espadas:
     if carta[1] in dic_valor:
-        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_spades.png')  
+        imagem=(f'cartas\{dic_valor[carta[1]]}_of_spades.png')  
     else:
-        imagem=(f'Pygame\cartas\{carta[1]}_of_spades.png')
+        imagem=(f'cartas\{carta[1]}_of_spades.png')
     dicionario_imagens_espadas[carta]=pygame.image.load(imagem)
 
 dicionario_imagens_copas = {}
 for carta in lista_copas:
     if carta[1] in dic_valor:
-        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_hearts.png')  
+        imagem=(f'cartas\{dic_valor[carta[1]]}_of_hearts.png')  
     else:
-        imagem=(f'Pygame\cartas\{carta[1]}_of_hearts.png')
+        imagem=(f'cartas\{carta[1]}_of_hearts.png')
     dicionario_imagens_copas[carta]=pygame.image.load(imagem)
 
 dicionario_imagens_paus = {}
 for carta in lista_paus:
     if carta[1] in dic_valor:
-        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_clubs.png')  
+        imagem=(f'cartas\{dic_valor[carta[1]]}_of_clubs.png')  
     else:
-        imagem=(f'Pygame\cartas\{carta[1]}_of_clubs.png')
+        imagem=(f'cartas\{carta[1]}_of_clubs.png')
     dicionario_imagens_paus[carta]=pygame.image.load(imagem)
 def vencedor(rodada, manilhas):
     print(rodada)
     carta_p1 = rodada[0]
     carta_p2 = rodada[1]
     carta_p3 = rodada[2]
-    carta_p4 = rodada[3]
+    carta_p4 = rodada[3] 
 
     cartas = [carta_p1, carta_p2, carta_p3, carta_p4]
 
@@ -175,9 +175,9 @@ def vencedor(rodada, manilhas):
                     empatou = True
 
         if empatou:
-            return -1
+            return -1 
 
         carta_vencedora_indice = cartas.index(carta_vencedora)
         ganhador = 'P{}'.format(carta_vencedora_indice+1)
 
-        return ganhador
+        return ganhador 
