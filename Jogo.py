@@ -84,6 +84,9 @@ pygame.mixer.music.set_volume(0.3)
 barulho_inicio = pygame.mixer.Sound('Pygame\cartas_inicio2.wav')
 barulho_carta = pygame.mixer.Sound('Pygame\carta_vira2.wav')
 desistiu = pygame.mixer.Sound('Pygame\01desistiu.wav')
+ze_venceu = pygame.mixer.Sound('Pygame\ze_roberts.wav')
+som_vencedor = pygame.mixer.Sound('Pygame\vencedor_fundo.wav')
+grito_venceu = pygame.mixer.Sound('Pygame\audio_venceu.wav')
 WIDTH = 1080
 HEIGHT = 720    
 pygame.display.set_caption('TRUCO!')
@@ -108,24 +111,22 @@ def main_menu():
     pygame.mixer.music.play(-1)
     while True:
         fonte = pygame.font.SysFont(None, 40)
-        fonte2  = pygame.font.SysFont("Algerian", 110)
         screen.fill((0,0,0))
-
         mx, my = pygame.mouse.get_pos()
-
+        mouse_pos = pygame.mouse.get_pos()
         button_1 = pygame.Rect(255, 545, 100, 45)
         button_2 = pygame.Rect(710, 545, 180, 45)
-        tela_fundo = pygame.image.load('Pygame\fundoinicio.jpg')
+        tela_fundo = pygame.image.load('Pygame\imagemfundo.png')
         tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
         draw_text('main menu', font, (255, 255, 255), screen, 20, 20)
         screen.blit(tela_fundo,(0,0))
-        if button_1.collidepoint((mx, my)):
+        if (button_1.collidepoint(mx, my)):
             if click:
                 barulho_inicio.play()
-                time.sleep(5)
+                time.sleep(6)
                 game()
 
-        if button_2.collidepoint((mx, my)):
+        if (button_2.collidepoint(mx, my)):
             if click:
                 options()
         pygame.draw.rect(screen, (255, 0, 0), button_1)
@@ -188,6 +189,8 @@ def game():
                 for i in range(len(lista_zuada)):
                     carta = lista_zuada[i]
                     if carta['rect'].collidepoint(mx, my):
+                        barulho_carta.play()
+                        time.sleep(0.5)
                         cartas_da_rodada.append(cartas_na_mesa[carta['jogador']][carta['carta']])
                         cartas_para_excluir.append(cartas_na_mesa[carta['jogador']][carta['carta']])
                         print(cartas_da_rodada)
@@ -291,7 +294,7 @@ def options():
         button_3 = pygame.Rect(0,0, 100, 30)
         tela_fundo = pygame.image.load('Pygame\Regras.png')
         tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
-        draw_text('main menu', font, (255, 255, 255), screen, 20, 20)
+        draw_text('Pygame\main menu', font, (255, 255, 255), screen, 20, 20)
         screen.blit(tela_fundo,(0,0))
 
         if button_3.collidepoint((mx, my)):
@@ -320,6 +323,9 @@ def time1_vencedor():
     running = True
     i = 0
     j = 300
+    ze_venceu.play()
+    som_vencedor.play()
+
     while running:
 
         fonte = pygame.font.SysFont(None, 35)
@@ -334,7 +340,6 @@ def time1_vencedor():
             screen.blit(tela_fundo,(0,0))
             j += 50
             i +=1
-
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -355,6 +360,8 @@ def time2_vencedor():
     running = True
     i = 0
     j = 300
+    ze_venceu.play()
+    som_vencedor.play()
     while running:
 
         fonte = pygame.font.SysFont(None, 35)
@@ -369,7 +376,6 @@ def time2_vencedor():
             screen.blit(tela_fundo,(0,0))
             j += 50
             i +=1
-
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
