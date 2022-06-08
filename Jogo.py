@@ -4,6 +4,8 @@ import pygame, sys
 import funcoes
 from pygame.locals import *
 import time
+
+#Lista de cartas criadas, separadas por naipe
 lista_ouros=['O4','O5','O6','O7','OQ','OJ','OK','OA','O2','O3']
 #espadas
 lista_espadas=['E4','E5','E6','E7','EQ','EJ','EK','EA','E2','E3']
@@ -13,11 +15,17 @@ lista_copas=['C4','C5','C6','C7','CQ','CJ','CK','CA','C2','C3']
 lista_paus=['P4','P5','P6','P7','PQ','PJ','PK','PA','P2','P3']
 #lista geral de nypes
 lista_geral=[lista_ouros,lista_espadas,lista_copas,lista_paus]
+#acrescentando esse dic_valor para facilinar na hora de baixar as imagens das cartas
 dic_valor = {'A':'ace','Q':"queen",'K':'king','J':'jack'}
+
 list1 = [1, 2, 3]
 list2 = [1]
-dicionario_imagens_ouro={}
+
 back_card = (r"Pygame\icon\back_card.png")
+
+#dicionarios das imagens carregadas
+dicionario_imagens_ouro={}
+
 for carta in lista_ouros:
     if carta[1] in dic_valor:
         imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_diamonds.png')  
@@ -49,22 +57,24 @@ for carta in lista_paus:
         imagem=(f'Pygame\cartas\{carta[1]}_of_clubs.png')
     dicionario_imagens_paus[carta]=(imagem)
 
+#juntando todos dicionarios em apenas um
 dicionario_imagens_1 = (dicionario_imagens_ouro|dicionario_imagens_espadas)
 dicionario_imagens_2 = (dicionario_imagens_1|dicionario_imagens_copas)
 dicionario_imagens_total = (dicionario_imagens_2|dicionario_imagens_paus)
 
-carta_tornada=funcoes.tornar_carta(lista_geral)  
-conserta = [lista_geral,carta_tornada]      
+#começar a puxar as funçoes para colocar no jogo
+carta_tornada=funcoes.tornar_carta(lista_geral)        
 cartas_na_mesa = funcoes.distribui_mao(carta_tornada)
-print(cartas_na_mesa)
-
 manilha_sorteada = funcoes.achar_manilhas(carta_tornada[1],lista_geral)
+
+#criando as listas para ir dando append
 cartas_da_rodada = []
 lista_zuada = []
 cartas_para_excluir = []
 
 
 
+#inicio configs do jogo
 mainClock = pygame.time.Clock()
 pygame.init()
 
@@ -78,6 +88,7 @@ font1 = pygame.font.SysFont(None, 40)
 
 verso = pygame.image.load(back_card)
 
+#funcao para desenhar texto
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
     textrect = textobj.get_rect()
@@ -86,6 +97,7 @@ def draw_text(text, font, color, surface, x, y):
 
 click = False
 
+#funcao do menu
 def main_menu():
     while True:
         
@@ -134,12 +146,14 @@ def main_menu():
 clock = pygame.time.Clock()
 FPS = 60
 
+#classe criada para conseguir separar o jogo em etapas
 class Truco:
     fase = "escolher"
 
 def desenha_na_tela(texto):
     return font1.render(texto, True, (0, 0, 0))
 
+#funcao do jogo
 def game():
 
     fonte2  = pygame.font.SysFont("Algerian", 110)
@@ -174,15 +188,11 @@ def game():
                         if len(cartas_da_rodada) % 4 == 0:
                             Truco.fase = "ganhador"
                             print(Truco.fase)
-                        #del cartas_na_mesa[carta['jogador']][carta['carta']]
-                        #imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_da_rodada])
-
             
             if event.type == pygame.QUIT:
                 game = False
         lista_zuada=[]
-        # ----- Gera saídas
-        screen.fill((0, 0, 0))  # Preenche com a cor branca
+        screen.fill((0, 0, 0)) 
         tela_fundo = pygame.image.load('Pygame/table_top.png')
         tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
         screen.blit(tela_fundo,(i,0))
@@ -190,13 +200,15 @@ def game():
         for t in range(len(cartas_na_mesa)):
             for i in range(len(cartas_na_mesa[t])): 
             
-                #print("procurando",cartas_na_mesa[t][i],cartas_da_rodada)
+                #imagem dividida em back card ou a frente normal
                 if cartas_na_mesa[t][i] in cartas_para_excluir:
                     imagem_carta = pygame.image.load(dicionario_imagens_total[cartas_na_mesa[t][i]])
                     #print("load da carta")
                 else:
                     imagem_carta = verso
                 maos = pygame.transform.scale(imagem_carta, (100, 130))
+
+                #posicao das cartas
                 if t == 0:
                     posx=0
                     posy=180+140*i
@@ -210,19 +222,22 @@ def game():
                     posx = 360+110*i
                     posy = 590
 
+                #adicionando as cartas clicadas pelo jogador
                 lista_zuada.append({'rect':pygame.Rect(posx, posy, 100, 130), 'jogador': t, 'carta': i})
                 screen.blit(maos, [posx, posy])
         
+        #load e blit da manilha
         imagem_manilhas = pygame.image.load(dicionario_imagens_total[carta_tornada[1]])
         manilhas = pygame.transform.scale(imagem_manilhas, (100, 130))
         screen.blit(manilhas, [470, 300])
 
+        #truco passa para fase ganhador, assim iniciando a proxima rodada e contabilizando o vencedor da passada
         if Truco.fase == "ganhador":
             vencedor = funcoes.vencedor(cartas_da_rodada, manilha_sorteada)
             print(f'o vencedor foi: {vencedor}')
             del cartas_da_rodada[:]
             
-
+            #sistema de pontuacao de acordo com a funcao
             if vencedor == -1:
                 empate += 1
                 time1 += 1
@@ -237,6 +252,7 @@ def game():
             else:
                 time2 += 1
 
+            #removendo carta, para ela não aparecer mais na tela, pós rodada
             print('tratando')
             for mao in cartas_na_mesa:
                 print(f' mao: {mao}')
@@ -249,12 +265,14 @@ def game():
             
             Truco.fase = "escolher"
 
+        #score board canto superior direito da tela
         screen.blit(desenha_na_tela('Time 1: ' + str(time1)), (WIDTH - 150, 10))
         screen.blit(desenha_na_tela('Time 2: ' + str(time2)), (WIDTH - 150, 40))
 
         pygame.display.update()
 
 
+#menu do HOW TO PLAY
 def options():
     running = True
     while running:
@@ -290,6 +308,7 @@ def options():
         mainClock.tick(60)
 
 
+#funcao para quando o time 1 ganha a partida
 def time1_vencedor():
     running = True
     i = 0
@@ -332,6 +351,7 @@ def time1_vencedor():
             pygame.display.update()
         mainClock.tick(60)
 
+#funcao para quando o time 2 ganha a partida
 def time2_vencedor():
     running = True
     i = 0
