@@ -77,7 +77,13 @@ cartas_para_excluir = []
 #inicio configs do jogo
 mainClock = pygame.time.Clock()
 pygame.init()
+pygame.mixer.init()
 
+pygame.mixer.music.load('Pygame\ambiente2.wav')
+pygame.mixer.music.set_volume(0.3)
+barulho_inicio = pygame.mixer.Sound('Pygame\cartas_inicio2.wav')
+barulho_carta = pygame.mixer.Sound('Pygame\carta_vira2.wav')
+desistiu = pygame.mixer.Sound('Pygame\01desistiu.wav')
 WIDTH = 1080
 HEIGHT = 720    
 pygame.display.set_caption('TRUCO!')
@@ -99,23 +105,26 @@ click = False
 
 #funcao do menu
 def main_menu():
+    pygame.mixer.music.play(-1)
     while True:
-        
         fonte = pygame.font.SysFont(None, 40)
         fonte2  = pygame.font.SysFont("Algerian", 110)
         screen.fill((0,0,0))
 
         mx, my = pygame.mouse.get_pos()
 
-        button_1 = pygame.Rect(50, 100, 200, 50)
-        button_2 = pygame.Rect(50, 200, 200, 50)
-        tela_fundo = pygame.image.load('Pygame/table_top.png')
+        button_1 = pygame.Rect(255, 545, 100, 45)
+        button_2 = pygame.Rect(710, 545, 180, 45)
+        tela_fundo = pygame.image.load('Pygame\fundoinicio.jpg')
         tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
         draw_text('main menu', font, (255, 255, 255), screen, 20, 20)
         screen.blit(tela_fundo,(0,0))
         if button_1.collidepoint((mx, my)):
             if click:
+                barulho_inicio.play()
+                time.sleep(5)
                 game()
+
         if button_2.collidepoint((mx, my)):
             if click:
                 options()
@@ -135,10 +144,8 @@ def main_menu():
                 if event.button == 1:
                     click = True
         
-        draw_text('PLAY', fonte, (255, 255, 255), screen, 110, 116)
-        draw_text('How To Play', fonte, (255, 255, 255), screen, 65, 210)
-        draw_text('As escuras', fonte2, (255, 0, 0), screen, 370, 50)
-        draw_text('com Maciel', fonte2, (255, 0, 0), screen, 380, 170)
+        draw_text('PLAY', fonte, (255, 255, 255), screen, 270, 556)
+        draw_text('How To Play', fonte, (255, 255, 255), screen, 720, 556)
 
         pygame.display.update()
         mainClock.tick(60)
@@ -155,14 +162,12 @@ def desenha_na_tela(texto):
 
 #funcao do jogo
 def game():
-
-    fonte2  = pygame.font.SysFont("Algerian", 110)
     i   = 0
     game=True
-
     time1 = 0
     time2 = 0
     empate = 0
+    lista_zuada=[]
     while game:
         clock.tick(FPS)
 
@@ -174,6 +179,8 @@ def game():
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                desistiu.play()
+                time.sleep(5)
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONUP:
@@ -193,7 +200,7 @@ def game():
                 game = False
         lista_zuada=[]
         screen.fill((0, 0, 0)) 
-        tela_fundo = pygame.image.load('Pygame/table_top.png')
+        tela_fundo = pygame.image.load('Pygame\table_top.png')
         tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
         screen.blit(tela_fundo,(i,0))
         
@@ -247,7 +254,7 @@ def game():
                 time1 += 1
                 if time1 == 2 and empate < 2:
                     time1_vencedor()
-                    draw_text(('Time 1 Venceu '),fonte2, (255, 255, 255), screen, 3, 2)
+                    
 
             else:
                 time2 += 1
@@ -318,22 +325,15 @@ def time1_vencedor():
         fonte = pygame.font.SysFont(None, 35)
         fonte2 = pygame.font.SysFont(None, 80)
         mx, my = pygame.mouse.get_pos()
-        button_4 = pygame.Rect(300,400, 230, 30)
-        tela_fundo = pygame.image.load('Pygame/table_top.png')
+        tela_fundo = pygame.image.load('Pygame\table_top.png')
         while i < 30:
             tela_fundo = pygame.transform.scale(tela_fundo,(j, (j+0)))
             pygame.display.update()
             clock = pygame.time.Clock()
-            clock.tick(5)
+            clock.tick(10)
             screen.blit(tela_fundo,(0,0))
             j += 50
             i +=1
-
-        if button_4.collidepoint((mx, my)):
-            if pygame.mouse.get_pressed()[0] == True:
-                del cartas_da_rodada[:]
-                game()
-        pygame.draw.rect(screen, (255, 0, 0), button_4)
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -346,8 +346,7 @@ def time1_vencedor():
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
-            draw_text('Jogar Novamente', fonte, (255, 255, 255), screen, 305, 404)
-            draw_text(('Time 1 Venceu '),fonte2, (255, 255, 255), screen, 360, 300)
+            draw_text(('Time 1 Venceu! '),fonte2, (255, 255, 255), screen, 360, 300)
             pygame.display.update()
         mainClock.tick(60)
 
@@ -361,23 +360,15 @@ def time2_vencedor():
         fonte = pygame.font.SysFont(None, 35)
         fonte2 = pygame.font.SysFont(None, 80)
         mx, my = pygame.mouse.get_pos()
-        button_4 = pygame.Rect(300,400, 230, 30)
-        tela_fundo = pygame.image.load('Pygame/table_top.png')
+        tela_fundo = pygame.image.load('Pygame\table_top.png')
         while i < 30:
             tela_fundo = pygame.transform.scale(tela_fundo,(j, (j+0)))
             pygame.display.update()
             clock = pygame.time.Clock()
-            clock.tick(5)
+            clock.tick(10)
             screen.blit(tela_fundo,(0,0))
             j += 50
             i +=1
-
-        if button_4.collidepoint((mx, my)):
-            if pygame.mouse.get_pressed()[0] == True:
-                del cartas_da_rodada[:]
-                game()
-                
-        pygame.draw.rect(screen, (255, 0, 0), button_4)
 
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -390,8 +381,7 @@ def time2_vencedor():
             if event.type == MOUSEBUTTONDOWN:
                 if event.button == 1:
                     click = True
-            draw_text('Jogar Novamente', fonte, (255, 255, 255), screen, 305, 404)
-            draw_text(('Time 2 Venceu '),fonte2, (255, 255, 255), screen, 360, 300)
+            draw_text(('Time 2 Venceu! '),fonte2, (255, 255, 255), screen, 360, 300)
             pygame.display.update()
         mainClock.tick(60)
 
