@@ -21,40 +21,40 @@ dic_valor = {'A':'ace','Q':"queen",'K':'king','J':'jack'}
 list1 = [1, 2, 3]
 list2 = [1]
 
-back_card = (r"Pygame\icon\back_card.png")
+back_card = (r"icon\back_card.png")
 
 #dicionarios das imagens carregadas
 dicionario_imagens_ouro={}
 
 for carta in lista_ouros:
     if carta[1] in dic_valor:
-        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_diamonds.png')  
+        imagem=(f'cartas\{dic_valor[carta[1]]}_of_diamonds.png')  
     else:
-        imagem=(f'Pygame\cartas\{carta[1]}_of_diamonds.png')
+        imagem=(f'cartas\{carta[1]}_of_diamonds.png')
     dicionario_imagens_ouro[carta]=(imagem)
 
 dicionario_imagens_espadas = {}
 for carta in lista_espadas:
     if carta[1] in dic_valor:
-        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_spades.png')  
+        imagem=(f'cartas\{dic_valor[carta[1]]}_of_spades.png')  
     else:
-        imagem=(f'Pygame\cartas\{carta[1]}_of_spades.png')
+        imagem=(f'cartas\{carta[1]}_of_spades.png')
     dicionario_imagens_espadas[carta]=(imagem)
 
 dicionario_imagens_copas = {}
 for carta in lista_copas:
     if carta[1] in dic_valor:
-        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_hearts.png')  
+        imagem=(f'cartas\{dic_valor[carta[1]]}_of_hearts.png')  
     else:
-        imagem=(f'Pygame\cartas\{carta[1]}_of_hearts.png')
+        imagem=(f'cartas\{carta[1]}_of_hearts.png')
     dicionario_imagens_copas[carta]=(imagem)
 
 dicionario_imagens_paus = {}
 for carta in lista_paus:
     if carta[1] in dic_valor:
-        imagem=(f'Pygame\cartas\{dic_valor[carta[1]]}_of_clubs.png')  
+        imagem=(f'cartas\{dic_valor[carta[1]]}_of_clubs.png')  
     else:
-        imagem=(f'Pygame\cartas\{carta[1]}_of_clubs.png')
+        imagem=(f'cartas\{carta[1]}_of_clubs.png')
     dicionario_imagens_paus[carta]=(imagem)
 
 #juntando todos dicionarios em apenas um
@@ -79,14 +79,14 @@ mainClock = pygame.time.Clock()
 pygame.init()
 pygame.mixer.init()
 
-pygame.mixer.music.load('Pygame\ambiente2.wav')
+pygame.mixer.music.load('ambiente2.wav')
 pygame.mixer.music.set_volume(0.3)
-barulho_inicio = pygame.mixer.Sound('Pygame\cartas_inicio2.wav')
-barulho_carta = pygame.mixer.Sound('Pygame\carta_vira2.wav')
-desistiu = pygame.mixer.Sound('Pygame\01desistiu.wav')
-ze_venceu = pygame.mixer.Sound('Pygame\ze_roberts.wav')
-som_vencedor = pygame.mixer.Sound('Pygame\vencedor_fundo.wav')
-grito_venceu = pygame.mixer.Sound('Pygame\audio_venceu.wav')
+barulho_inicio = pygame.mixer.Sound('cartas_inicio2.wav')
+barulho_carta = pygame.mixer.Sound('carta_vira2.wav')
+desistiu = pygame.mixer.Sound('01desistiu.wav')
+ze_venceu = pygame.mixer.Sound('ze_roberts.wav')
+som_vencedor = pygame.mixer.Sound('vencedor_fundo.wav')
+grito_venceu = pygame.mixer.Sound('audio_venceu.wav')
 WIDTH = 1080
 HEIGHT = 720    
 pygame.display.set_caption('TRUCO!')
@@ -116,7 +116,7 @@ def main_menu():
         mouse_pos = pygame.mouse.get_pos()
         button_1 = pygame.Rect(255, 545, 100, 45)
         button_2 = pygame.Rect(710, 545, 180, 45)
-        tela_fundo = pygame.image.load('Pygame\imagemfundo.png')
+        tela_fundo = pygame.image.load('imagemfundo.png')
         tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
         draw_text('main menu', font, (255, 255, 255), screen, 20, 20)
         screen.blit(tela_fundo,(0,0))
@@ -203,7 +203,7 @@ def game():
                 game = False
         lista_zuada=[]
         screen.fill((0, 0, 0)) 
-        tela_fundo = pygame.image.load('Pygame\table_top.png')
+        tela_fundo = pygame.image.load('table_top.png')
         tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
         screen.blit(tela_fundo,(i,0))
         
@@ -292,9 +292,9 @@ def options():
         fonte = pygame.font.SysFont(None, 40)
         mx, my = pygame.mouse.get_pos()
         button_3 = pygame.Rect(0,0, 100, 30)
-        tela_fundo = pygame.image.load('Pygame\Regras.png')
+        tela_fundo = pygame.image.load('Regras.png')
         tela_fundo = pygame.transform.scale(tela_fundo,(WIDTH, HEIGHT))
-        draw_text('Pygame\main menu', font, (255, 255, 255), screen, 20, 20)
+        draw_text('main menu', font, (255, 255, 255), screen, 20, 20)
         screen.blit(tela_fundo,(0,0))
 
         if button_3.collidepoint((mx, my)):
@@ -331,7 +331,7 @@ def time1_vencedor():
         fonte = pygame.font.SysFont(None, 35)
         fonte2 = pygame.font.SysFont(None, 80)
         mx, my = pygame.mouse.get_pos()
-        tela_fundo = pygame.image.load('Pygame\table_top.png')
+        tela_fundo = pygame.image.load('table_top.png')
         while i < 30:
             tela_fundo = pygame.transform.scale(tela_fundo,(j, (j+0)))
             pygame.display.update()
@@ -367,7 +367,7 @@ def time2_vencedor():
         fonte = pygame.font.SysFont(None, 35)
         fonte2 = pygame.font.SysFont(None, 80)
         mx, my = pygame.mouse.get_pos()
-        tela_fundo = pygame.image.load('Pygame\table_top.png')
+        tela_fundo = pygame.image.load('table_top.png')
         while i < 30:
             tela_fundo = pygame.transform.scale(tela_fundo,(j, (j+0)))
             pygame.display.update()
